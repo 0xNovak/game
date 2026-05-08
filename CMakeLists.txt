@@ -10,3 +10,4 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY  ${CMAKE_BINARY_DIR}/lib)
 
 include_directories(external/SFML-3.1.0/include)
 add_subdirectory(external/SFML-3.1.0)
+add_subdirectory(src)
