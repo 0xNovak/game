@@ -74,7 +74,7 @@ void Engine::loopUpdate() {
     }
 
     updateSnap->addEntry({0, sf::Sprite{txt_it->second}});
-    updateSnap->addEntry({1, sf::Sprite{assetManager.get(0)}});
+    updateSnap->addEntry({1, sf::Sprite{assetManager.get(0).texture}});
     updateSnap->addEntry({2, sf::Sprite{txt_TMP}});
     updateSnap->vec[0].sprite.setPosition({20, 100});
     updateSnap->vec[1].sprite.setPosition({50, 100});

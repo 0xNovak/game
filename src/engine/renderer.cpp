@@ -1,5 +1,6 @@
 #include "engine/renderer.h"
 
+#include "SFML/Graphics/Texture.hpp"
 #include "engine/render_entries.h"
 #include <algorithm>
 #include <cstdint>
@@ -27,7 +28,7 @@ void Renderer::render(const Snapshot *snap) {
     window_p->draw(entry.sprite);
 }
 
-const sf::Texture &AssetManager::get(uint16_t key) {
+const AssetEntry &AssetManager::get(uint16_t key) {
   auto it = hashMap.find(key);
   if (it != hashMap.end())
     return it->second;
@@ -36,6 +37,10 @@ const sf::Texture &AssetManager::get(uint16_t key) {
 }
 
 void AssetManager::init(uint16_t key, const char *assetPath) {
-  hashMap.emplace(key, sf::Texture{std::format("resources/{}", assetPath)});
+  AssetEntry asset{
+      sf::Texture{sf::Texture{std::format("resources/{}", assetPath)}},
+      {24, 32}, // TODO: read data of texture to get these
+      {1}};
+  hashMap.emplace(key, asset);
 }
 void AssetManager::initManager(uint32_t size) { hashMap.reserve(size); }

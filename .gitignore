@@ -2,3 +2,7 @@ build/
 .cache/
 *.log
 *.aseprite
+
+#it wont change eiter way and my conf wont search throu them 
+external/ 
+
