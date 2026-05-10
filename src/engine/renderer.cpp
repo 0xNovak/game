@@ -2,7 +2,10 @@
 
 #include "engine/render_entries.h"
 #include <algorithm>
+#include <cstdint>
 #include <execution>
+#include <format>
+#include <stdexcept>
 #include <vector>
 
 using namespace sgr::render;
@@ -23,3 +26,16 @@ void Renderer::render(const Snapshot *snap) {
   for (auto entry : sorted)
     window_p->draw(entry.sprite);
 }
+
+const sf::Texture &AssetManager::get(uint16_t key) {
+  auto it = hashMap.find(key);
+  if (it != hashMap.end())
+    return it->second;
+  throw std::runtime_error(std::format(
+      "RUNTIME ERROR: texture under key {} havent been loaded properly", key));
+}
+
+void AssetManager::init(uint16_t key, const char *assetPath) {
+  hashMap.emplace(key, sf::Texture{std::format("resources/{}", assetPath)});
+}
+void AssetManager::initManager(uint32_t size) { hashMap.reserve(size); }

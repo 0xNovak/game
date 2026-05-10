@@ -6,6 +6,7 @@
 
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "engine/render_entries.h"
+#include "engine/renderer.h"
 
 namespace sgr {
 class Engine {
@@ -33,6 +34,7 @@ private:
 
   render::Snapshot snapA, snapB;
   std::mutex snapMutex;
+  render::AssetManager assetManager;
 
   const uint32_t FRAMERATE = 120;
   const uint32_t UPDATERATE = 144;

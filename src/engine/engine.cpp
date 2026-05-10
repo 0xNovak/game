@@ -1,9 +1,6 @@
 #include "engine.h"
 
 #include <cstdint>
-#include <ctime>
-#include <iostream>
-#include <map>
 #include <mutex>
 #include <stdexcept>
 #include <thread>
@@ -30,22 +27,28 @@ void Engine::run() {
   m_window.close();
   updateThread.join();
 }
+
 void Engine::engineInit() {
   m_window.create(sf::VideoMode{{1280u, 720u}}, "app", sf::Style::Close,
                   sf::State::Windowed);
   m_window.setFramerateLimit(FRAMERATE);
   m_window.setPosition({0, 0});
+  assetManager.initManager(10);
 }
+
 void Engine::loopUpdate() {
   std::unordered_map<uint16_t, const sf::Texture> hashMap{};
-  hashMap.insert({0, sf::Texture{"resources/gfx/tmp.png"}});
+  // hashMap.insert({0, sf::Texture{"resources/gfx/tmp.png"}});
+  hashMap.emplace(0, sf::Texture{"resources/gfx/tmp.png"});
   const sf::Texture txt_TMP{"resources/gfx/tmp.png"};
+  auto PositionY = 100.f;
+  assetManager.init(0, "gfx/tmp.png");
 
   sf::Clock clock;
   const auto delay = 1'000'000 / UPDATERATE;
   int64_t nextUpdate = delay;
   int64_t lastUpdate = 0;
-  auto PositionY = 100.f;
+
   while (m_IsRunning) {
     sf::sleep(
         sf::microseconds(nextUpdate - clock.getElapsedTime().asMicroseconds()));
@@ -56,6 +59,10 @@ void Engine::loopUpdate() {
 
     updateSnap->vec.clear();
     update(deltaTime);
+
+#define test_sprite
+#ifdef test_sprite
+
     PositionY += .5f;
     if (PositionY > 200.f)
       PositionY = 100.f;
@@ -67,11 +74,12 @@ void Engine::loopUpdate() {
     }
 
     updateSnap->addEntry({0, sf::Sprite{txt_it->second}});
-    updateSnap->addEntry({1, sf::Sprite{txt_TMP}});
+    updateSnap->addEntry({1, sf::Sprite{assetManager.get(0)}});
     updateSnap->addEntry({2, sf::Sprite{txt_TMP}});
     updateSnap->vec[0].sprite.setPosition({20, 100});
-    updateSnap->vec[0].sprite.setPosition({50, 100});
+    updateSnap->vec[1].sprite.setPosition({50, 100});
     updateSnap->vec[2].sprite.setPosition({130, PositionY});
+#endif // test_sprite
     {
       std::lock_guard<std::mutex> lock{snapMutex};
       std::swap(updateSnap, renderSnap);
