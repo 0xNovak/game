@@ -35,8 +35,8 @@ private:
   render::Snapshot snapA, snapB;
   std::mutex snapMutex;
   render::AssetManager assetManager;
-
-  const uint32_t FRAMERATE = 120;
-  const uint32_t UPDATERATE = 144;
 };
+constexpr uint32_t FRAMERATE = 120;  // per sec
+constexpr uint32_t UPDATERATE = 144; // per sec
+constexpr sf::Vector2u WINDOW_SIZE{1280, 720};
 } // namespace sgr

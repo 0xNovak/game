@@ -8,6 +8,7 @@
 #include "SFML/System/Clock.hpp"
 #include "SFML/System/Sleep.hpp"
 #include "SFML/System/Time.hpp"
+#include "SFML/System/Vector2.hpp"
 #include "SFML/Window/VideoMode.hpp"
 #include "SFML/Window/WindowEnums.hpp"
 
@@ -27,7 +28,7 @@ void Engine::run() {
 }
 
 void Engine::engineInit() {
-  m_window.create(sf::VideoMode{{1280u, 720u}}, "app", sf::Style::Close,
+  m_window.create(sf::VideoMode{WINDOW_SIZE}, "app", sf::Style::Close,
                   sf::State::Windowed);
   m_window.setFramerateLimit(FRAMERATE);
   m_window.setPosition({0, 0});
@@ -35,13 +36,13 @@ void Engine::engineInit() {
 }
 
 void Engine::loopUpdate() {
-  const auto delay = 1'000'000 / UPDATERATE;
+  constexpr auto DELAY = 1'000'000 / UPDATERATE; // delay in microseconds
 
   sf::Clock clock;
   int64_t lastUpdate = 0;
   auto now = [&clock]() { return clock.getElapsedTime().asMicroseconds(); };
   while (m_IsRunning) {
-    sf::sleep(sf::microseconds(lastUpdate + delay - now()));
+    sf::sleep(sf::microseconds(lastUpdate + DELAY - now()));
 
     updateSnap->vec.clear();
     update(now() - lastUpdate);
@@ -53,6 +54,7 @@ void Engine::loopUpdate() {
     }
   }
 }
+
 void Engine::loopRender() {
 
   render::Renderer rendererUint{&m_window};

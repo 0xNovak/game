@@ -8,7 +8,9 @@
 
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/System/Vector2.hpp"
+
 #include "engine/render_entries.h"
+
 namespace sgr::render {
 class Renderer {
 public:
