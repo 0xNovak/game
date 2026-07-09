@@ -17,12 +17,12 @@ public:
 
 protected:
   virtual void init() = 0;
-  virtual void update(uint64_t deltaTime) = 0;
+  virtual void update(float deltaTime) = 0;
   virtual void handleEvents(sf::RenderWindow &window) = 0;
-
   void close() { m_IsRunning.store(false); };
 
   render::Snapshot *renderSnap{&snapA}, *updateSnap{&snapB};
+  render::AssetManager assetManager;
 
 private:
   void loopUpdate();
@@ -34,7 +34,6 @@ private:
 
   render::Snapshot snapA, snapB;
   std::mutex snapMutex;
-  render::AssetManager assetManager;
 };
 constexpr uint32_t FRAMERATE = 120;  // per sec
 constexpr uint32_t UPDATERATE = 144; // per sec

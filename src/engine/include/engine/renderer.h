@@ -7,7 +7,6 @@
 #include <vector>
 
 #include "SFML/Graphics/Texture.hpp"
-#include "SFML/System/Vector2.hpp"
 
 #include "engine/render_entries.h"
 
@@ -20,14 +19,13 @@ public:
 private:
   sf::RenderWindow *window_p;
 };
-
 struct AssetEntry {
   const sf::Texture texture;
-  sf::Vector2u frameSize{24, 32};
+  sf::Vector2i frameSize{24, 32};
   std::vector<uint8_t> frameAmount{1}; // per row frame amount
 };
 struct AssetManager {
-  const AssetEntry &get(uint16_t key);
+  const AssetEntry &get(uint16_t key) const;
   void init(uint16_t key, const char *assetPath);
   void initManager(uint32_t size);
 

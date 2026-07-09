@@ -1,6 +1,5 @@
 #include "engine.h"
 
-#include <cstdint>
 #include <mutex>
 #include <thread>
 
@@ -36,13 +35,13 @@ void Engine::engineInit() {
 }
 
 void Engine::loopUpdate() {
-  constexpr auto DELAY = 1'000'000 / UPDATERATE; // delay in microseconds
+  constexpr auto DELAY = 1.f / UPDATERATE;
 
   sf::Clock clock;
-  int64_t lastUpdate = 0;
-  auto now = [&clock]() { return clock.getElapsedTime().asMicroseconds(); };
+  float lastUpdate = 0;
+  auto now = [&clock]() { return clock.getElapsedTime().asSeconds(); };
   while (m_IsRunning) {
-    sf::sleep(sf::microseconds(lastUpdate + DELAY - now()));
+    sf::sleep(sf::seconds(lastUpdate + DELAY - now()));
 
     updateSnap->vec.clear();
     update(now() - lastUpdate);
@@ -59,10 +58,10 @@ void Engine::loopRender() {
 
   render::Renderer rendererUint{&m_window};
   while (m_IsRunning && m_window.isOpen()) {
-    handleEvents(m_window);
     m_window.clear(sf::Color{30, 30, 30, 255});
     {
       std::lock_guard<std::mutex> lock{snapMutex};
+      handleEvents(m_window);
       rendererUint.render(renderSnap);
     }
     m_window.display();

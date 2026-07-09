@@ -28,19 +28,20 @@ void Renderer::render(const Snapshot *snap) {
     window_p->draw(entry.sprite);
 }
 
-const AssetEntry &AssetManager::get(uint16_t key) {
+const AssetEntry &AssetManager::get(uint16_t key) const {
   auto it = hashMap.find(key);
   if (it != hashMap.end())
     return it->second;
-  throw std::runtime_error(std::format(
-      "RUNTIME ERROR: texture under key {} havent been loaded properly", key));
+  throw std::runtime_error(
+      std::format("texture under key {} havent been loaded properly", key));
 }
 
 void AssetManager::init(uint16_t key, const char *assetPath) {
   AssetEntry asset{
-      sf::Texture{sf::Texture{std::format("resources/{}", assetPath)}},
-      {24, 32}, // TODO: read data of texture to get these
-      {1}};
+      .texture =
+          sf::Texture{sf::Texture{std::format("resources/{}", assetPath)}},
+      .frameSize = {24, 32}, // TODO: read data of texture to get these
+      .frameAmount = {1}};
   hashMap.emplace(key, asset);
 }
 void AssetManager::initManager(uint32_t size) { hashMap.reserve(size); }
