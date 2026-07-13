@@ -2,6 +2,7 @@ build/
 .cache/
 *.log
 *.aseprite
+_local_*
 
 #it wont change eiter way and my conf wont search throu them 
 external/ 
