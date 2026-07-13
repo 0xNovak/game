@@ -40,7 +40,8 @@ void AssetManager::init(uint16_t key, const char *assetPath) {
   AssetEntry asset{
       .texture =
           sf::Texture{sf::Texture{std::format("resources/{}", assetPath)}},
-      .frameSize = {24, 32}, // TODO: read data of texture to get these
+      .frameSize = {2,
+                    2}, //{24, 32}, // TODO: read data of texture to get these
       .frameAmount = {1}};
   hashMap.emplace(key, asset);
 }
