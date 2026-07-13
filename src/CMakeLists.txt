@@ -1,4 +1,5 @@
 add_subdirectory(engine)
+add_subdirectory(utility)
 add_subdirectory(app)
 
 add_executable(application main.cpp)
