@@ -1,15 +1,19 @@
 #include "entity/player.h"
 
+#include <SFML/Window/Keyboard.hpp>
 using entity::Player;
-void Player::updatePosition(float dt) {
-  if (direction == sf::Vector2f{})
-    return;
-  speed_m = 125;
-  sf::Vector2f positionDelta = direction * speed_m * dt;
-  if (direction.length() != 0) {
-    positionDelta = positionDelta.normalized();
-  }
-  position_m += positionDelta;
-  direction = {};
+
+void Player::handleInput() {
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) ||
+      sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+    direction.y -= 1.f;
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) ||
+      sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+    direction.y += 1.f;
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) ||
+      sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+    direction.x -= 1.f;
+  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) ||
+      sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+    direction.x += 1.f;
 }
-void Player::move(sf::Vector2f deltaPosition) { position_m += deltaPosition; }
