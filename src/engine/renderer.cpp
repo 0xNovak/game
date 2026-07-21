@@ -16,7 +16,7 @@ void Renderer::render(const Snapshot *snap) {
   for (auto entry : snap->vec)
     sorted.push_back(entry);
 
-  std::sort(std::execution::seq, sorted.begin(), sorted.end(),
+  std::sort(sorted.begin(), sorted.end(),
             [](const RenderEntry &a, const RenderEntry &b) {
               auto A_pos = a.sprite.getPosition(),
                    B_pos = b.sprite.getPosition();

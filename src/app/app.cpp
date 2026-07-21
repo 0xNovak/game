@@ -1,6 +1,7 @@
 #include "app.h"
 
 #include <array>
+#include <utility>
 #include <vector>
 
 #include "SFML/Graphics/Rect.hpp"
@@ -22,7 +23,7 @@ void a::init() {
   player = new entity::Player(std::move(T_hbx), 0);
   eVector.push_back(player);
 }
-void a::initResources() { assetManager.init(0, "gfx/tmp.png"); };
+void a::initResources() { assetManager.init(0, "gfx/tmp.png"); }
 bool A_pressed{false};
 void a::handleEvents(sf::RenderWindow &window) {
   while (const std::optional event = window.pollEvent()) {
@@ -54,13 +55,13 @@ void a::initUSnap() {
         throw std::runtime_error(std::format(
             "frame given by Entity does fit in the texture "
             "bounds \n given : {}/{}  {} ",
-            (int)chosen[Frame], (int)chosen[Row],
-            (int)chosen[Row] > entry.frameAmount.size()
+            static_cast<int>(chosen[Frame]), static_cast<int>(chosen[Row]),
+            static_cast<int>(chosen[Row]) > entry.frameAmount.size()
                 ? std::format("row extends textures capability({})",
-                              (int)entry.frameAmount.size())
-                : std::format("frame extends rows frame capability({})",
-                              (int)entry.frameAmount[chosen[Row]])));
-
+                              static_cast<int>(entry.frameAmount.size()))
+                : std::format(
+                      "frame extends rows frame capability({})",
+                      static_cast<int>(entry.frameAmount[chosen[Row]]))));
       auto spSize = entry.frameSize;
       sf::Vector2i spPosi = {chosen[Frame] * spSize.x, chosen[Row] * spSize.y};
       sprt.setTextureRect({{spPosi}, {spSize}});

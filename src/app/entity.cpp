@@ -1,5 +1,4 @@
 #include "entity.h"
-
 using namespace entity;
 void Entity::move(sf::Vector2f deltaPosition) { position_m += deltaPosition; }
 void Entity::updatePosition(float dt) {
