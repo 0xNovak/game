@@ -2,7 +2,8 @@ build/
 .cache/
 *.log
 *.aseprite
-_local_*
+*_local*
+__cmake_*
 
 #it wont change eiter way and my conf wont search throu them 
 external/ 
