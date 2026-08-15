@@ -36,6 +36,7 @@
         freetype
         harfbuzz
         glib
+        libsysprof-capture
       ];
       shellHook = ''zsh'';
     };
