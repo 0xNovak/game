@@ -1,5 +1,6 @@
 #include "engine.h"
 
+#include <format>
 #include <mutex>
 #include <thread>
 
@@ -14,10 +15,15 @@
 #include "engine/render_entries.h"
 #include "engine/renderer.h"
 
+#include "./logEngine.h"
+
 using namespace sgr;
 void Engine::run() {
+  LogEng::info("engine init");
   engineInit();
   init();
+
+  LogEng::info("engine \033[32mSUCCESFUL\033[0m");
   std::thread updateThread(&Engine::loopUpdate, this);
   loopRender();
 
@@ -27,11 +33,13 @@ void Engine::run() {
 }
 
 void Engine::engineInit() {
+  LogEng::info("  window");
   m_window.create(sf::VideoMode{WINDOW_SIZE}, "app", sf::Style::Close,
                   sf::State::Windowed);
   m_window.setFramerateLimit(FRAMERATE);
   m_window.setPosition({0, 0});
   assetManager.initManager(10);
+  LogEng::info("  window \033[32mOK\033[0m");
 }
 
 void Engine::loopUpdate() {
@@ -55,7 +63,6 @@ void Engine::loopUpdate() {
 }
 
 void Engine::loopRender() {
-
   render::Renderer rendererUint{&m_window};
   while (m_IsRunning && m_window.isOpen()) {
     m_window.clear(sf::Color{30, 30, 30, 255});

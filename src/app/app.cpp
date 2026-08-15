@@ -1,11 +1,15 @@
 #include "app.h"
 
 #include <array>
+#include <exception>
+#include <iostream>
+#include <string>
 #include <utility>
 #include <vector>
 
 #include "SFML/Graphics/Rect.hpp"
 #include "SFML/Graphics/Sprite.hpp"
+#include "SFML/System/String.hpp"
 #include "SFML/System/Vector2.hpp"
 #include "SFML/Window/Event.hpp"
 
@@ -14,6 +18,8 @@
 #include "entity.h"
 #include "entity/player.h"
 #include "sfVectorOps.h"
+
+#include <log.h>
 
 using a = Application;
 

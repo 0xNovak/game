@@ -1,0 +1,24 @@
+#pragma once
+#include <print>
+#include <string_view>
+
+// clang-format off
+namespace TColor {
+constexpr std::string_view red     = "\033[31m";
+constexpr std::string_view green   = "\033[32m";
+constexpr std::string_view yellow  = "\033[33m";
+constexpr std::string_view blue    = "\033[34m";
+constexpr std::string_view magenta = "\033[35m";
+constexpr std::string_view cyan    = "\033[36m";
+constexpr std::string_view reset   = "\033[0m";
+} // namespace color
+// clang-format on
+
+namespace LogEng {
+inline void err(std::exception &err) {
+  std::println("[{}ENGINE ERR{}] {}", TColor::red, TColor::reset, err.what());
+}
+inline void info(std::string_view str) {
+  std::println("[{}ENGINE LOG{}] {}", TColor::yellow, TColor::reset, str);
+}
+} // namespace LogEng
