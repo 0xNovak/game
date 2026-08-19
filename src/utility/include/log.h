@@ -15,8 +15,8 @@ constexpr std::string_view reset   = "\033[0m";
 } // Color
 // clang-format on
 namespace Log {
-inline void err(std::exception &err) {
-  std::println("[{}ERR{}] {}", TColor::red, TColor::reset, err.what());
+inline void err(std::string_view str) {
+  std::println("[{}ERR{}] {}", TColor::red, TColor::reset, str);
 }
 
 inline void info(std::string_view str) {
