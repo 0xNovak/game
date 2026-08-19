@@ -8,16 +8,21 @@
 
 #include "SFML/Graphics/Texture.hpp"
 
+#include "SFML/Graphics/View.hpp"
 #include "engine/render_entries.h"
+#include "engine/viewManager.h"
 
 namespace sgr::render {
+using namespace sgr::render::view;
 class Renderer {
 public:
-  Renderer(sf::RenderWindow *window) : window_p(window) {};
+  Renderer(sf::RenderWindow *window, ViewManager &viewManager)
+      : window_p(window), viewManager(viewManager) {};
   void render(const Snapshot *snap);
 
 private:
   sf::RenderWindow *window_p;
+  ViewManager &viewManager;
 };
 struct AssetEntry {
   const sf::Texture texture;
@@ -27,7 +32,7 @@ struct AssetEntry {
 struct AssetManager {
   const AssetEntry &get(uint16_t key) const;
   void init(uint16_t key, const char *assetPath);
-  void initManager(uint32_t size);
+  void initManager(uint16_t size);
 
 private:
   std::unordered_map<uint16_t, AssetEntry> hashMap{};

@@ -4,7 +4,6 @@
 #include "engine/render_entries.h"
 #include <algorithm>
 #include <cstdint>
-#include <execution>
 #include <format>
 #include <stdexcept>
 #include <vector>
@@ -24,8 +23,10 @@ void Renderer::render(const Snapshot *snap) {
                 return A_pos.y > B_pos.y;
               return a.id < b.id;
             });
-  for (auto entry : sorted)
+  for (auto entry : sorted) {
+    window_p->setView(viewManager.get(entry.viewID));
     window_p->draw(entry.sprite);
+  }
 }
 
 const AssetEntry &AssetManager::get(uint16_t key) const {
@@ -45,4 +46,4 @@ void AssetManager::init(uint16_t key, const char *assetPath) {
       .frameAmount = {1}};
   hashMap.emplace(key, asset);
 }
-void AssetManager::initManager(uint32_t size) { hashMap.reserve(size); }
+void AssetManager::initManager(uint16_t size) { hashMap.reserve(size); }

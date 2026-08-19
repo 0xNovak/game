@@ -12,12 +12,13 @@
 #include "SFML/Window/VideoMode.hpp"
 #include "SFML/Window/WindowEnums.hpp"
 
+#include "engine/constants.h"
 #include "engine/render_entries.h"
 #include "engine/renderer.h"
 
 #include "./logEngine.h"
-
 using namespace sgr;
+using namespace sgr::constants;
 void Engine::run() {
   LogEng::info("engine init");
   engineInit();
@@ -39,6 +40,7 @@ void Engine::engineInit() {
   m_window.setFramerateLimit(FRAMERATE);
   m_window.setPosition({0, 0});
   assetManager.initManager(10);
+  viewManager.initManager(3);
   LogEng::info("  window \033[32mOK\033[0m");
 }
 
@@ -55,22 +57,21 @@ void Engine::loopUpdate() {
     update(now() - lastUpdate);
     lastUpdate = now();
 
-    {
-      std::lock_guard<std::mutex> lock{snapMutex};
-      std::swap(updateSnap, renderSnap);
-    }
+    std::lock_guard<std::mutex> lock{snapMutex};
+    editView();
+    std::swap(updateSnap, renderSnap);
   }
 }
 
 void Engine::loopRender() {
-  render::Renderer rendererUint{&m_window};
+  render::Renderer rendererUint{&m_window, viewManager};
   while (m_IsRunning && m_window.isOpen()) {
     m_window.clear(sf::Color{30, 30, 30, 255});
-    {
-      std::lock_guard<std::mutex> lock{snapMutex};
-      handleEvents(m_window);
-      rendererUint.render(renderSnap);
-    }
+
+    snapMutex.lock();
+    handleEvents(m_window);
+    rendererUint.render(renderSnap);
+    snapMutex.unlock();
     m_window.display();
   }
   m_IsRunning.store(false);

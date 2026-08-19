@@ -21,4 +21,10 @@ inline void err(std::exception &err) {
 inline void info(std::string_view str) {
   std::println("[{}ENGINE LOG{}] {}", TColor::yellow, TColor::reset, str);
 }
+
+inline void debug(std::string_view str) {
+#ifdef DEBUG_LOG
+  std::println("[{}D LOG{}] {}", TColor::blue, TColor::reset, str);
+#endif /* ifdef #ifdef DEBUG_LOG */
+}
 } // namespace LogEng
