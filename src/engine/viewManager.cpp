@@ -4,7 +4,6 @@
 #include <format>
 #include <stdexcept>
 
-#include "SFML/Graphics/Rect.hpp"
 #include "SFML/Graphics/View.hpp"
 
 #include "SFML/System/Vector2.hpp"
@@ -21,7 +20,7 @@ const sf::View &VMan::get(uint8_t key) const {
 }
 sf::View &VMan::edit(uint8_t key) {
   auto it = hashMap.find(key);
-  if (it != hashMap.end())
+  if (it != hashMap.end()) [[likely]]
     return it->second;
   throw std::runtime_error(
       std::format("view under key {} havent been loaded properly", key));

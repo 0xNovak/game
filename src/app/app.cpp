@@ -29,7 +29,7 @@ void a::init() {
   player = new entity::Player(std::move(T_hbx), 0);
   eVector.push_back(player);
 }
-void a::initResources() { assetManager.init(0, "gfx/tmp.png"); }
+void a::initResources() { assetManager.init(0, "gfx/debug.png"); }
 bool A_pressed{false};
 void a::handleEvents(sf::RenderWindow &window) {
   while (const std::optional event = window.pollEvent()) {

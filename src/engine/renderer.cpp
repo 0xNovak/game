@@ -1,12 +1,16 @@
 #include "engine/renderer.h"
 
-#include "SFML/Graphics/Texture.hpp"
-#include "engine/render_entries.h"
 #include <algorithm>
 #include <cstdint>
 #include <format>
-#include <stdexcept>
+#include <unordered_map>
+#include <unordered_set>
 #include <vector>
+
+#include "SFML/Graphics/Texture.hpp"
+
+#include "engine/render_entries.h"
+#include "logEngine.h"
 
 using namespace sgr::render;
 void Renderer::render(const Snapshot *snap) {
@@ -28,13 +32,18 @@ void Renderer::render(const Snapshot *snap) {
     window_p->draw(entry.sprite);
   }
 }
-
+std::unordered_set<uint16_t> seenErrorKeys;
 const AssetEntry &AssetManager::get(uint16_t key) const {
   auto it = hashMap.find(key);
-  if (it != hashMap.end())
+  if (it != hashMap.end()) [[likely]]
     return it->second;
-  throw std::runtime_error(
-      std::format("texture under key {} havent been loaded properly", key));
+  if (seenErrorKeys.insert(key).second) {
+    LogEng::err(std::format(
+        "texture under {} haven't been loaded properly, falling back to debug",
+        key));
+  }
+
+  return hashMap.at(0);
 }
 
 void AssetManager::init(uint16_t key, const char *assetPath) {
