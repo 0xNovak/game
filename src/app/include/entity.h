@@ -19,12 +19,13 @@ public:
     entityCount_s++;
   };
   virtual void updatePosition(float deltaTime);
-  virtual void move(sf::Vector2f deltaPosition);
 
+  // clang-format off
   sf::Vector2f getPosition() { return position_m; }
-  Hitbox getHitbox() { return hitbox_m; }
-  std::array<uint8_t, 2> getFrame() { return currentFrame_m; }
-  float getSpeed() { return speed_m; };
+  auto getHitbox()           { return hitbox_m; }
+  auto getFrame()            { return currentFrame_m; }
+  float getSpeed()           { return speed_m; }
+  // clang-format on
 
   sf::Vector2f direction{0, 0};
 
@@ -40,5 +41,4 @@ protected:
 private:
   std::array<uint8_t, 2> currentFrame_m{0, 0};
 };
-
 } // namespace entity
