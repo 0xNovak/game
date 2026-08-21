@@ -1,5 +1,4 @@
 // Copyright (c) 2026 0xNovak. All Rights Reserved.
-#define DEBUG_LOG
 #include <app.h>
 #include <log.h>
 int main(int argc, char *argv[]) {

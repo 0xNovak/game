@@ -6,6 +6,8 @@
 #include "SFML/System/Vector2.hpp"
 #include <SFML/System.hpp>
 
+#include "log.h"
+
 namespace entity {
 struct Hitbox {
   sf::Vector2f position{};
@@ -16,16 +18,15 @@ class Entity {
 public:
   Entity(Hitbox hitbox, uint16_t spriteId)
       : hitbox_m(hitbox), spriteId(spriteId), Id(entityCount_s) {
+    Log::debug(std::format("init entity (ID:{})", entityCount_s));
     entityCount_s++;
   };
   virtual void updatePosition(float deltaTime);
 
-  // clang-format off
-  sf::Vector2f getPosition() { return position_m; }
-  auto getHitbox()           { return hitbox_m; }
-  auto getFrame()            { return currentFrame_m; }
-  float getSpeed()           { return speed_m; }
-  // clang-format on
+  auto getPosition() -> sf::Vector2f { return position_m; }
+  auto getHitbox() -> Hitbox { return hitbox_m; }
+  auto getFrame() -> std::array<uint8_t, 2> { return currentFrame_m; }
+  auto getSpeed() -> float { return speed_m; }
 
   sf::Vector2f direction{0, 0};
 
@@ -33,7 +34,7 @@ public:
   const uint16_t Id;
 
 protected:
-  float speed_m{10};
+  float speed_m{50};
 
   Hitbox hitbox_m{};
   sf::Vector2f &position_m{hitbox_m.position}; // alias for easier acces;

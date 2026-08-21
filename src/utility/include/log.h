@@ -1,7 +1,9 @@
 #pragma once
-#include <exception>
+#include <format>
 #include <print>
 #include <string_view>
+
+#define DEBUG_LOG
 
 // clang-format off
 namespace TColor {
