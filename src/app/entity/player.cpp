@@ -7,26 +7,22 @@
 using entity::Player;
 
 void Player::handleInput() {
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W) ||
-      sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Up))
+  using sf::Keyboard::isKeyPressed;
+  using sf::Keyboard::Key;
+  if (isKeyPressed(Key::W) || isKeyPressed(Key::Up))
     direction.y -= 1.f;
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S) ||
-      sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Down))
+  if (isKeyPressed(Key::S) || isKeyPressed(Key::Down))
     direction.y += 1.f;
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A) ||
-      sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left))
+  if (isKeyPressed(Key::A) || isKeyPressed(Key::Left))
     direction.x -= 1.f;
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D) ||
-      sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right))
+  if (isKeyPressed(Key::D) | isKeyPressed(Key::Right))
     direction.x += 1.f;
-  if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space) &&
-      roll_m.cooldown <= roll_m.sinceLast)
+  if (isKeyPressed(Key::Space) && roll_m.cooldown <= roll_m.sinceLast)
     roll_m.left = roll_m.duration;
 }
 void Player::updatePosition(float dt) {
   if (roll_m.cooldown >= roll_m.sinceLast) {
     roll_m.sinceLast += dt;
-    Log::debug(std::format("lastroll = {}", roll_m.sinceLast));
   }
   if (roll_m.left <= 0) {
     Entity::updatePosition(dt);
