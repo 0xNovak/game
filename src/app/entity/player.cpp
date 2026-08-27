@@ -1,6 +1,5 @@
-#include "entity/player.h"
+#include "player/player.h"
 #include "entity.h"
-#include "log.h"
 
 #include <SFML/Window/Keyboard.hpp>
 #include <algorithm>

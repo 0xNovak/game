@@ -12,7 +12,7 @@
 #include "engine/render_entries.h"
 #include "engine/renderer.h"
 #include "entity.h"
-#include "entity/player.h"
+#include "playerCollection.h"
 #include "sfVectorOps.h"
 
 #include <log.h>
