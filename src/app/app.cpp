@@ -40,7 +40,8 @@ void a::handleEvents(sf::RenderWindow &window) {
 void a::update(float dt) {
   player->handleInput();
   for (auto E : eVector)
-    E->updatePosition(dt);
+    E->updatePosition(dt); // FIXME:move frm eVec to movingVec & create eVec &
+                           // add update to entity
   initUSnap();
 }
 

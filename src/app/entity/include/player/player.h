@@ -13,7 +13,7 @@
 #include "player/weapon.h"
 
 namespace entity {
-class Player : public Entity {
+class Player : public Entity, public IMoving {
 
 public:
   Player(Hitbox hitbox, uint16_t spriteId) : Entity(hitbox, spriteId) {};

@@ -24,7 +24,18 @@ void Player::updatePosition(float dt) {
     roll_m.sinceLast += dt;
   }
   if (roll_m.left <= 0) {
-    Entity::updatePosition(dt);
+    if (direction == sf::Vector2f{0, 0})
+      return;
+    sf::Vector2f positionDelta = direction.normalized() * speed_m * dt;
+    position_m += positionDelta;
+    direction = {0, 0};
+    return;
+  }
+  // cancel if no direction
+  // TODO:change to roll to mouse direction
+  if (roll_m.direction == sf::Vector2f{0, 0}) {
+    roll_m.left = 0;
+    roll_m.sinceLast = roll_m.cooldown;
     return;
   }
   // first roll frame
@@ -34,13 +45,6 @@ void Player::updatePosition(float dt) {
     roll_m.sinceLast = 0;
   }
 
-  // cancel if no direction
-  // TODO:change to roll to mouse direction
-  if (roll_m.direction == sf::Vector2f{0, 0}) {
-    roll_m.left = 0;
-    roll_m.sinceLast = roll_m.cooldown;
-    return;
-  }
   sf::Vector2f positionDelta;
   positionDelta = roll_m.direction.normalized() * speed_m * 2.f * dt;
   position_m += positionDelta;
