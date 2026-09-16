@@ -7,4 +7,5 @@ __cmake_*
 
 #it wont change eiter way and my conf wont search throu them 
 external/ 
+flake.nix
 
