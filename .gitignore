@@ -3,7 +3,9 @@ build/
 *.log
 *.aseprite
 *_local*
+*_loclink
 __cmake_*
+run.sh
 
 #it wont change eiter way and my conf wont search throu them 
 external/ 
