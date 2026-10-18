@@ -1,9 +1,9 @@
 #pragma once
 
-#include "SFML/Graphics/RenderWindow.hpp"
 #include <SFML/Graphics.hpp>
-#include <cstdint>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <unordered_map>
+#include <ussableInt.h>
 #include <vector>
 
 #include "SFML/Graphics/Texture.hpp"
@@ -27,7 +27,7 @@ private:
 struct AssetEntry {
   const sf::Texture texture;
   sf::Vector2i frameSize{24, 32};
-  std::vector<uint8_t> frameAmount{1}; // per row frame amount
+  std::vector<u8> frameAmount{1}; // per row frame amount
 };
 struct AssetManager {
   const AssetEntry &get(uint16_t key) const;

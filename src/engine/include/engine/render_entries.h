@@ -2,15 +2,15 @@
 
 #include "SFML/Graphics/Sprite.hpp"
 #include <SFML/Graphics.hpp>
-#include <cstddef>
 #include <cstdint>
+#include <ussableInt.h>
 #include <vector>
 namespace sgr::render {
 
 struct RenderEntry {
   uint32_t id;
   sf::Sprite sprite;
-  uint8_t viewID{0};
+  u8 viewID{0};
 };
 struct Snapshot {
   Snapshot() { vec.reserve(30); }

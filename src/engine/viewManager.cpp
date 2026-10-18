@@ -1,8 +1,8 @@
 #include "engine/viewManager.h"
 
-#include <cstdint>
 #include <format>
 #include <stdexcept>
+#include <ussableInt.h>
 
 #include "SFML/Graphics/View.hpp"
 
@@ -11,14 +11,14 @@
 
 using VMan = sgr::render::view::ViewManager;
 
-const sf::View &VMan::get(uint8_t key) const {
+const sf::View &VMan::get(u8 key) const {
   auto it = hashMap.find(key);
   if (it != hashMap.end())
     return it->second;
   throw std::runtime_error(
       std::format("view under key {} havent been loaded properly", key));
 }
-sf::View &VMan::edit(uint8_t key) {
+sf::View &VMan::edit(u8 key) {
   auto it = hashMap.find(key);
   if (it != hashMap.end()) [[likely]]
     return it->second;
@@ -26,8 +26,8 @@ sf::View &VMan::edit(uint8_t key) {
       std::format("view under key {} havent been loaded properly", key));
 }
 
-void VMan::init(uint8_t key, sf::View view) { hashMap.emplace(key, view); }
-void VMan::initManager(uint8_t size) {
+void VMan::init(u8 key, sf::View view) { hashMap.emplace(key, view); }
+void VMan::initManager(u8 size) {
   using namespace sgr::constants;
   hashMap.reserve(size);
   sf::View stdMainView{{0, 0}, static_cast<sf::Vector2f>(WINDOW_SIZE)};
