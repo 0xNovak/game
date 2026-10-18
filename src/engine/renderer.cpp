@@ -1,7 +1,6 @@
 #include "engine/renderer.h"
 
 #include <algorithm>
-#include <cstdint>
 #include <format>
 #include <unordered_map>
 #include <unordered_set>
@@ -11,6 +10,7 @@
 
 #include "engine/render_entries.h"
 #include "logEngine.h"
+#include <ussableInt.h>
 
 using namespace sgr::render;
 void Renderer::render(const Snapshot *snap) {
@@ -32,8 +32,8 @@ void Renderer::render(const Snapshot *snap) {
     window_p->draw(entry.sprite);
   }
 }
-std::unordered_set<uint16_t> seenErrorKeys;
-const AssetEntry &AssetManager::get(uint16_t key) const {
+std::unordered_set<u16> seenErrorKeys;
+const AssetEntry &AssetManager::get(u16 key) const {
   auto it = hashMap.find(key);
   if (it != hashMap.end()) [[likely]]
     return it->second;
@@ -46,7 +46,7 @@ const AssetEntry &AssetManager::get(uint16_t key) const {
   return hashMap.at(0);
 }
 
-void AssetManager::init(uint16_t key, const char *assetPath) {
+void AssetManager::init(u16 key, const char *assetPath) {
   AssetEntry asset{
       .texture =
           sf::Texture{sf::Texture{std::format("resources/{}", assetPath)}},
@@ -55,4 +55,4 @@ void AssetManager::init(uint16_t key, const char *assetPath) {
       .frameAmount = {1}};
   hashMap.emplace(key, asset);
 }
-void AssetManager::initManager(uint16_t size) { hashMap.reserve(size); }
+void AssetManager::initManager(u16 size) { hashMap.reserve(size); }

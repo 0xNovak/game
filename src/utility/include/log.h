@@ -1,5 +1,4 @@
 #pragma once
-#include <format>
 #include <print>
 #include <string_view>
 
@@ -16,6 +15,7 @@ constexpr std::string_view cyan    = "\033[36m";
 constexpr std::string_view reset   = "\033[0m";
 } // Color
 // clang-format on
+
 namespace Log {
 inline void err(std::string_view str) {
   std::println("[{}ERR{}] {}", TColor::red, TColor::reset, str);

@@ -1,6 +1,5 @@
 #include "engine.h"
 
-#include <format>
 #include <mutex>
 #include <thread>
 
@@ -51,7 +50,8 @@ void Engine::loopUpdate() {
   float lastUpdate = 0;
   auto now = [&clock]() { return clock.getElapsedTime().asSeconds(); };
   while (m_IsRunning) {
-    sf::sleep(sf::seconds(lastUpdate + DELAY - now()));
+    using sf::seconds;
+    sf::sleep(seconds(lastUpdate + DELAY - now()));
 
     updateSnap->vec.clear();
     update(now() - lastUpdate);
