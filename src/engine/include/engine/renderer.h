@@ -30,11 +30,13 @@ struct AssetEntry {
   std::vector<u8> frameAmount{1}; // per row frame amount
 };
 struct AssetManager {
-  const AssetEntry &get(uint16_t key) const;
-  void init(uint16_t key, const char *assetPath);
-  void initManager(uint16_t size);
+  const AssetEntry &get(u16 key) const;
+  void init(u16 key, const char *assetPath);
+  void initManager(u16 size);
 
 private:
-  std::unordered_map<uint16_t, AssetEntry> hashMap{};
+  // OPTIMALIZATION: could use specialized hash for ensuring 0
+  // conflicts (bucketless)
+  std::unordered_map<u16, AssetEntry> hashMap{};
 };
 } // namespace sgr::render
