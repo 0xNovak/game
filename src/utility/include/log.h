@@ -1,8 +1,7 @@
 #pragma once
+#include <cstdlib>
 #include <print>
 #include <string_view>
-
-#define DEBUG_LOG
 
 // clang-format off
 namespace TColor {
@@ -26,8 +25,8 @@ inline void info(std::string_view str) {
 }
 
 inline void debug(std::string_view str) {
-#ifdef DEBUG_LOG
-  std::println("[{}D LOG{}] {}", TColor::blue, TColor::reset, str);
-#endif /* ifdef #ifdef DEBUG_LOG */
+  if (std::getenv("DEBUG_LOG") != nullptr) {
+    std::println("[{}D LOG{}] {}", TColor::blue, TColor::reset, str);
+  }
 }
 } // namespace Log
