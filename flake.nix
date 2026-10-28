@@ -54,6 +54,7 @@
         rg FIXME: | sed 's/^.*FIXME:/FIXME:/' | sed 's/.*\(FIXME:.*\)/\x1b[31m\1\x1b[0m/'
         rg HACK:  | sed 's/^.*HACK:/HACK:/'   | sed 's/.*\(HACK:.*\)/\x1b[35m\1\x1b[0m/'
         exec zsh
+
       '';
     };
   };
