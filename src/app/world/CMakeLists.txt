@@ -1,0 +1,10 @@
+add_library(world STATIC room.cpp roomMaager.cpp)
+target_link_libraries(world PUBLIC utility engine)
+target_include_directories(world PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
+
+if(NOT CMAKE_BUILD_TYPE STREQUAL "Release")
+  set(CMAKE_CXX_STANDARD 23)
+  set(CMAKE_CXX_STANDARD_REQUIRED ON)
+  add_executable(TUI_roomcreator main.cpp)
+  target_link_libraries(TUI_roomcreator PRIVATE world)
+endif()

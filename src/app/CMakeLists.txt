@@ -1,0 +1,5 @@
+add_library(app STATIC app.cpp)
+add_subdirectory(entity)
+add_subdirectory(world)
+target_link_libraries(app PUBLIC engine entity world utility)
+target_include_directories(app PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
