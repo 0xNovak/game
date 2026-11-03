@@ -13,8 +13,8 @@
 #include "engine/renderer.h"
 #include "entity.h"
 #include "playerCollection.h"
+#include "room.hpp"
 #include "sfVectorOps.h"
-#include "world.hpp"
 
 #include <log.h>
 

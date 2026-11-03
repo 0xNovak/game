@@ -1,4 +1,4 @@
-add_library(world STATIC room.cpp roomMaager.cpp)
+add_library(world STATIC room.cpp roomManager.cpp mapManager.cpp)
 target_link_libraries(world PUBLIC utility engine)
 target_include_directories(world PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 

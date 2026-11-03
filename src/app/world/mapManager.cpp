@@ -1,5 +1,6 @@
 #include <worldManager.hpp>
 
+#include <bit>
 #include <cstdlib>
 #include <log.h>
 #include <ussableInt.h>
@@ -17,6 +18,7 @@ void MapManager::generateMap(u8 floorLevel) {
   while (c) {
     for (int i = 0; i < 4; ++i) {
       auto room = RoomMan.get(0);
+      // HACK: temporary hard code room id 0
       if (auto placed = try_place(room, c)) {
         macrogrid |= *placed;
         break;
@@ -33,10 +35,11 @@ void MapManager::generateMap(u8 floorLevel) {
 }
 std::optional<u64> MapManager::try_place(const Room &room, const u64 c) {
   const int idx = std::countl_zero(c);
-  const int cy = idx / W, cx = idx % W;
+  const i32 cy = idx / W, cx = idx % W;
+  // OPTIM: could be i8 i think
 
   u16 shape = room.shape;
-  const int tries = room.rotable ? 4 : 1; // covers the non-rotable case too
+  const u8 tries = room.rotable ? 4 : 1; // covers the non-rotable case too
   for (int i = 0; i < tries; ++i) {
     const u64 shape_t = transformShape(shape);
     auto [ox, oy] = findOffset(shape_t, cx, cy, c);

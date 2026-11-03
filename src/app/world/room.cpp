@@ -13,7 +13,7 @@
 
 using namespace world;
 void logBasicInfo(Room room);
-Room getRoom(const char *path) {
+Room world::getRoom(const char *path) {
   auto roomPath =
       std::filesystem::path("resources/rooms") / std::filesystem::path(path);
   if (!std::filesystem::is_regular_file(roomPath)) {

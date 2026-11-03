@@ -7,6 +7,10 @@
 #include <room.hpp>
 
 namespace world {
+struct PlacedRoom {
+  i16 x, y;
+
+}; // placeholder
 struct RoomManager {
   const Room &get(u16 key);
   void init(u16 key, const char *roomPath);
