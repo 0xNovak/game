@@ -14,15 +14,13 @@ static constexpr u64 MSB = u64{1} << (MapManager::W * MapManager::H - 1);
 void MapManager::generateMap(u8 floorLevel) {
   macrogrid = 0;
   holesgrid = 0;
+  placedRooms.clear();
   u64 c = MSB;
   while (c) {
     for (int i = 0; i < 4; ++i) {
-      auto room = RoomMan.get(0);
       // HACK: temporary hard code room id 0
-      if (auto placed = try_place(room, c)) {
-        macrogrid |= *placed;
+      if (try_place(0, c))
         break;
-      }
       if (i == 3)
         holesgrid |= c;
     }
@@ -33,21 +31,25 @@ void MapManager::generateMap(u8 floorLevel) {
     }
   }
 }
-std::optional<u64> MapManager::try_place(const Room &room, const u64 c) {
-  const int idx = std::countl_zero(c);
+bool MapManager::try_place(u16 room_key, const u64 c) {
+  auto room = RoomMan.get(room_key);
+  const i32 idx = std::countl_zero(c);
   const i32 cy = idx / W, cx = idx % W;
   // OPTIM: could be i8 i think
 
   u16 shape = room.shape;
-  const u8 tries = room.rotable ? 4 : 1; // covers the non-rotable case too
+  const u8 tries = room.rotable ? 4 : 1;
   for (int i = 0; i < tries; ++i) {
     const u64 shape_t = transformShape(shape);
     auto [ox, oy] = findOffset(shape_t, cx, cy, c);
-    if (auto moved = fit(shape_t, ox, oy))
-      return moved;
+    if (auto moved = fit(shape_t, ox, oy)) {
+      macrogrid |= *moved;
+      placedRooms.push_back(PlacedRoom{ox, oy, room_key, *moved});
+      return true;
+    }
     shape = rotate90(shape); // cumulative
   }
-  return std::nullopt;
+  return false;
 }
 std::optional<u64> MapManager::fit(u64 shape, i32 cx, i32 cy) {
   if (!boundsCheck(shape, cx, cy))

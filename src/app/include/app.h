@@ -19,6 +19,7 @@ class Application : public sgr::Engine {
   std::vector<entity::Entity *> eVector{};
   entity::Player *player{nullptr};
   world::RoomManager RoomCacheManager{};
+  world::MapManager mapManager{RoomCacheManager};
   std::pair<sf::Vector2i, u8> gamePosition{{0, 0}, 0};
 
 public:

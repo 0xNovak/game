@@ -9,7 +9,8 @@
 namespace world {
 struct PlacedRoom {
   i16 x, y;
-
+  u16 id;
+  u64 shapeMask;
 }; // placeholder
 struct RoomManager {
   const Room &get(u16 key);
@@ -36,7 +37,7 @@ struct MapManager {
   u32 seed;
 
 private:
-  std::optional<u64> try_place(const Room &room, const u64 c);
+  bool try_place(u16 room_key, const u64 c);
   std::optional<u64> fit(u64 shape, i32 cx, i32 cy);
   u64 transformShape(u16 shape);
   bool boundsCheck(u64 shape, i32 cx, i32 cy);

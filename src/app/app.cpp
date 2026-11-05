@@ -44,6 +44,7 @@ void a::handleEvents(sf::RenderWindow &window) {
 void a::update(float dt) {
   // TODO: if level complete ->++level; roomManager.clear();
   // mapManager.generageMap(level);
+  mapManager.generateMap(gamePosition.second);
   player->handleInput();
   for (auto E : eVector)
     E->updatePosition(dt);
